@@ -15,8 +15,8 @@ Cały proces (EDA → cechy → trening → tuning → ocena → dokumentacja) u
 | Baseline (średnia) | domyślny | -0.001 | 8.721 | -0.000 | 7.263 | 74.402 | 8.626 |
 | Regresja liniowa | domyślny | 0.333 | 7.121 | 0.337 | 5.738 | 49.343 | 7.024 |
 | Ridge | domyślny | 0.333 | 7.121 | 0.337 | 5.738 | 49.344 | 7.024 |
-| Las losowy | domyślny | 0.250 | 7.548 | 0.264 | 6.018 | 54.748 | 7.399 |
-| Gradient Boosting | domyślny | 0.340 | 7.085 | 0.342 | 5.719 | 48.987 | 6.999 |
+| Las losowy | domyślny | 0.251 | 7.546 | 0.264 | 6.016 | 54.740 | 7.399 |
+| Gradient Boosting | domyślny | 0.340 | 7.085 | 0.342 | 5.716 | 48.945 | 6.996 |
 | Sieć neuronowa (MLP) | domyślny | 0.305 | 7.268 | 0.296 | 5.940 | 52.392 | 7.238 |
 | Ridge | tuning | 0.333 | 7.121 | 0.337 | 5.739 | 49.344 | 7.025 |
 | Las losowy | tuning | 0.337 | 7.100 | 0.340 | 5.729 | 49.093 | 7.007 |
