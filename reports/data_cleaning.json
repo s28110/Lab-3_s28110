@@ -1,0 +1,30 @@
+{
+  "rows_raw": 4739,
+  "missing_per_column": {
+    "gender": 0,
+    "ethnicity": 0,
+    "score": 0,
+    "fcollege": 0,
+    "mcollege": 0,
+    "home": 0,
+    "urban": 0,
+    "unemp": 0,
+    "wage": 0,
+    "distance": 0,
+    "tuition": 0,
+    "education": 0,
+    "income": 0,
+    "region": 0
+  },
+  "dropped_missing_target": 0,
+  "duplicates_removed": 0,
+  "outliers_iqr": {
+    "unemp": 206,
+    "wage": 272,
+    "distance": 268,
+    "tuition": 0,
+    "education": 0,
+    "score": 0
+  },
+  "rows_clean": 4739
+}

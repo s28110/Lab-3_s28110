@@ -1,0 +1,73 @@
+name: ML pipeline – Analizator wyników
+
+on:
+  push:
+    branches: [main, master]
+    paths-ignore: ["**.md"]
+  pull_request:
+  workflow_dispatch:          # ręczne uruchomienie z zakładki Actions
+  schedule:
+    - cron: "0 6 * * 1"       # co poniedziałek: ponowny trening na świeżo pobranych danych
+
+permissions:
+  contents: write             # potrzebne do commitowania wyników
+
+concurrency:
+  group: ml-pipeline-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  train-and-evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalacja zależności
+        run: pip install -r requirements.txt
+
+      - name: Pobranie datasetu
+        run: python -c "from src import data; data.download(force=True)"
+
+      - name: Testy jakości danych
+        run: python -m pytest tests/test_data.py -v
+
+      - name: EDA + inżynieria cech + trening + tuning + ocena + raport PDF
+        run: python main.py
+
+      - name: Quality gate (próg R², baseline, overfitting)
+        run: python -m pytest tests/test_model.py -v
+
+      - name: Podsumowanie w zakładce Actions
+        if: always()
+        run: python -m src.report --ci-summary >> "$GITHUB_STEP_SUMMARY" || true
+
+      - name: Artefakty (raport, wykresy, model)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wyniki-${{ github.run_number }}
+          path: |
+            Readme.pdf
+            README.md
+            reports/
+            models/best_model.joblib
+          retention-days: 30
+
+      - name: Commit wyników do repozytorium
+        if: github.event_name != 'pull_request' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Readme.pdf README.md reports/
+          git diff --cached --quiet && echo "Brak zmian" && exit 0
+          git commit -m "ci: aktualizacja wyników i dokumentacji [skip ci]"
+          git push
