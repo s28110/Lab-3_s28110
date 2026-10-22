@@ -67,7 +67,7 @@ jobs:
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add Readme.pdf README.md reports/
+          for f in Readme.pdf README.md reports; do [ -e "$f" ] && git add "$f"; done
           git diff --cached --quiet && echo "Brak zmian" && exit 0
           git commit -m "ci: aktualizacja wyników i dokumentacji [skip ci]"
           git push
