@@ -23,5 +23,5 @@ Cały proces (EDA → cechy → trening → tuning → ocena → dokumentacja) u
 | Gradient Boosting | tuning | 0.343 | 7.070 | 0.341 | 5.727 | 49.052 | 7.004 |
 | Sieć neuronowa (MLP) | tuning | 0.310 | 7.240 | 0.292 | 5.901 | 52.646 | 7.256 |
 
-_Zaktualizowano automatycznie: 2026-10-22_
+_Zaktualizowano automatycznie: 2026-10-26_
 <!-- RESULTS:END -->
